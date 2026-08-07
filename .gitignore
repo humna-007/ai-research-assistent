@@ -2,7 +2,6 @@ venv/
 .env
 __pycache__/
 *.pyc
-faiss_index/
 .vscode/
 data/sample_docs/*
 !data/sample_docs/.gitkeep
