@@ -469,24 +469,44 @@ def handle_uploads(uploaded_files):
 # ---------------------------------------------------------------------------
 EXT_KEYWORDS = {"pdf": "pdf", "docx": "docx", "doc": "docx", "word": "docx", "txt": "txt", "text file": "txt"}
 
+import re
+
+GENERIC_WORDS = {
+    "the", "a", "an", "is", "of", "in", "on", "for", "to", "and", "what",
+    "does", "do", "about", "describe", "tell", "me", "this", "that",
+    "project", "document", "doc", "docs", "file", "files", "pdf", "docx",
+    "txt", "report", "paper", "task", "uploaded", "upload",
+}
+
+
+def _tokenize(text: str) -> set:
+    words = re.findall(r"[a-zA-Z0-9]+", text.lower())
+    return {w for w in words if len(w) > 1 and w not in GENERIC_WORDS}
+
+
 def detect_target_sources(question: str) -> set:
-    """Scope retrieval to specific files if the question names a filename or file type."""
-    q_lower = question.lower()
-    targets = set()
+    """Scope retrieval to a specific file if the question's meaningful
+    words clearly overlap with that filename's meaningful words."""
+    q_tokens = _tokenize(question)
+    if not q_tokens:
+        return set()
 
+    matches = {}
     for fname in st.session_state.processed_files:
-        if fname.lower() in q_lower:
-            targets.add(fname)
-    if targets:
-        return targets
+        name_without_ext = fname.rsplit(".", 1)[0]
+        f_tokens = _tokenize(name_without_ext)
+        overlap = q_tokens & f_tokens
+        if overlap:
+            matches[fname] = len(overlap)
 
-    for keyword, ext in EXT_KEYWORDS.items():
-        if keyword in q_lower:
-            matching = [f for f in st.session_state.processed_files if f.lower().endswith(f".{ext}")]
-            if len(matching) == 1:
-                targets.add(matching[0])
+    if not matches:
+        return set()
 
-    return targets
+    # Only restrict to a file if it's a clearly stronger match than the rest —
+    # avoids accidentally narrowing on a weak coincidental overlap.
+    best_score = max(matches.values())
+    top_matches = {f for f, score in matches.items() if score == best_score}
+    return top_matches
 
 def handle_question(question: str):
     question = question.strip()
@@ -584,7 +604,7 @@ def render_main():
                     for s in msg["sources"]:
                         page = s["metadata"].get("page")
                         label = s["metadata"]["source"] + (f" · page {page}" if page else "")
-                        st.markdown(f'<span class="doc-chip">{html_lib.escape(label)}</span>', unsafe_allow_html=True)
+                        st.markdown(f'<span class="doc-chip">{html_lib.escape(label)} (score: {s["score"]:.3f})</span>', unsafe_allow_html=True)
                         st.caption(s["text"])
 
             if msg.get("summarized_context"):
