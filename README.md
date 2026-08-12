@@ -141,8 +141,10 @@ Expandable panel showing Model 1's condensed context, passed to Model 2 for the 
 
 ### Sidebar — Expanded and Collapsed
 Full sidebar with chats, documents, and settings; and the collapsed icon rail for a minimal view.
-
+sidebar expanded
 ![Sidebar Expanded](screenshots/06_sidebar_expanded.jpg)
+
+sidebar collapsed
 ![Sidebar Collapsed](screenshots/07_sidebar_collapsed.jpg)
 
 ### Light and Dark Theme
