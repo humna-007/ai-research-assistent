@@ -93,24 +93,24 @@ Built for the **Teerop (SMC-Private) Limited — Gen AI & LLM Applications Inter
 ---
 
 ## Project Structure
----
 
+```
 teerop_3/
-├── app.py # Streamlit UI, session state, chat/upload orchestration
+├── app.py                       # Streamlit UI, session state, chat/upload orchestration
 ├── requirements.txt
 ├── .streamlit/
-│ └── config.toml # Theme configuration
+│   └── config.toml              # Theme configuration
 ├── utils/
-│ ├── document_processor.py # PDF/DOCX/TXT extraction + validation
-│ ├── chunking.py # RecursiveCharacterTextSplitter wrapper
-│ ├── embeddings.py # Sentence Transformers embedding generation
-│ ├── vector_store.py # FAISS index, standard + filtered search
-│ ├── memory.py # Per-chat conversation memory
-│ └── llm_handler.py # Dual Groq LLM orchestration
+│   ├── document_processor.py    # PDF/DOCX/TXT extraction + validation
+│   ├── chunking.py              # RecursiveCharacterTextSplitter wrapper
+│   ├── embeddings.py            # Sentence Transformers embedding generation
+│   ├── vector_store.py          # FAISS index, standard + filtered search
+│   ├── memory.py                # Per-chat conversation memory
+│   └── llm_handler.py           # Dual Groq LLM orchestration
 ├── data/
-│ └── sample_docs/ # Sample PDF/DOCX/TXT for testing
-└── screenshots/ # UI screenshots (see below)
----
+│   └── sample_docs/             # Sample PDF/DOCX/TXT for testing
+└── screenshots/                 # UI screenshots (see below)
+```
 
 ## Screenshots
 
