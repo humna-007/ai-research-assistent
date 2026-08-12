@@ -93,6 +93,8 @@ Built for the **Teerop (SMC-Private) Limited — Gen AI & LLM Applications Inter
 ---
 
 ## Project Structure
+---
+
 teerop_3/
 ├── app.py # Streamlit UI, session state, chat/upload orchestration
 ├── requirements.txt
