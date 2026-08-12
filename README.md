@@ -127,7 +127,7 @@ Multi-format upload with real-time staged status: extracting, chunking, embeddin
 ### Chat Interface
 Conversational interface showing a question and its generated answer.
 
-![Chat Interface](screenshots/03_chat_interface.jpg)
+![Chat Interface](screenshots/3_chat_interface.jpg)
 
 ### Source References
 Expandable citations showing the exact document, page number, and excerpt used to generate the answer.
